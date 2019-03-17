@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const admin = require("firebase-admin");
 const namedColors = require('./colorDictionary.js');
+const { db } = require('../initialize');
 
 // INIT
 const app = express();
@@ -16,19 +17,6 @@ app.get('/time', (req, res) => {
   //console.log("send time");
   res.send(`server timestamp: ${Date.now()}`);
 });
-
-try {
-    const serviceAccount = require('./../../serviceAccountKey.json');
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        databaseURL: "https://smartlight-4861d.firebaseio.com",
-        databaseAuthVariableOverride: {
-            uid: "assistant-api"
-        }
-    });
-}catch(e) {
-    console.error(e)
-}
 
 // HELPERS
 function raceToSuccess(promises) {
@@ -149,7 +137,6 @@ function applyNewColor(req) {
   });
 }
 
-const db = admin.database();
 // set the color of an lamp
 app.post('/set', (req, res) => {
   // error handling

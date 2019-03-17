@@ -1,20 +1,5 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-
-try {
-  const serviceAccount = require('./../../serviceAccountKey.json');
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://smartlight-4861d.firebaseio.com",
-    databaseAuthVariableOverride: {
-      uid: "assistant-api"
-    }
-  });
-} catch (e) {
-  console.error(e)
-}
-
-const db = admin.database();
+const { db } = require('../initialize');
 
 exports = module.exports = functions.database.ref('/users/{userId}/groups/{groupId}/current')
   .onUpdate((change, context) => {
