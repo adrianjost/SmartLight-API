@@ -1,6 +1,5 @@
 const functions = require("firebase-functions");
 const express = require("express");
-const admin = require("firebase-admin");
 const namedColors = require("./colorDictionary.js");
 const { db } = require("../initialize");
 
@@ -20,42 +19,36 @@ app.get("/time", (req, res) => {
 	res.send(`server timestamp: ${Date.now()}`);
 });
 
-// HELPERS
-function raceToSuccess(promises) {
-	let numRejected = 0;
-	return new Promise((resolve, reject) => {
-		promises.forEach((promise) => {
-			promise.then(resolve).catch((error) => {
-				if (++numRejected === promises.length) reject(new Error());
-			});
-		});
-	});
-}
-
 // FUNCTIONS
 function authenticateUser(req) {
-	//console.log("#2");
 	// Authenticate user using secret token
-	return new Promise((resolve, reject) => {
-		db.ref("users/" + req.body.uid + "/secret").once("value", (secretSnap) => {
-			const server_secret = secretSnap.val();
-			if (server_secret === req.body.secret) {
-				return resolve(req);
-			}
-			return reject(
-				new Error(
+	return db
+		.collection("users")
+		.doc(req.body.uid)
+		.get()
+		.then((doc) => {
+			if (!doc.exists) {
+				throw new Error(
 					JSON.stringify({
 						code: 401,
-						message: `authentication with secret failed`,
+						message: `wrong uid or secret`,
 					})
-				)
-			);
+				);
+			}
+			const server_secret = doc.data().api_token;
+			if (server_secret !== req.body.secret) {
+				throw new Error(
+					JSON.stringify({
+						code: 401,
+						message: `wrong uid or secret`,
+					})
+				);
+			}
+			return req;
 		});
-	});
 }
 
-function extractObject(req) {
-	//console.log("#3");
+function extractObjectName(req) {
 	return new Promise((resolve, reject) => {
 		let sanitisedString = req.body.textString
 			.replace(/bitte/g, "")
@@ -76,66 +69,53 @@ function extractObject(req) {
 	});
 }
 
-function getObjectPathByName(req) {
-	//console.log("#4");
-	// get lampId by Name
-	return new Promise((resolve, reject) => {
-		const lookupPaths = [
-			`users/${req.body.uid}/groups`,
-			`users/${req.body.uid}/lamps`,
-		];
-		const lookups = lookupPaths.map(async (lookupPath) => {
-			const snap = await db
-				.ref(lookupPath)
-				.orderByChild("name")
-				.equalTo(req.body.objectName)
-				.once("value");
-			if (snap.val()) {
-				return {
-					objectPath: lookupPath + "/" + Object.keys(snap.val())[0],
-				};
-			}
-			throw new Error("not found");
-		});
-		return raceToSuccess(lookups)
-			.then((object) => {
-				req.result.objectPath = object.objectPath;
-				return resolve(req);
-			})
-			.catch((error) => {
-				return reject(
-					new Error(
-						JSON.stringify({
-							code: 404,
-							message: `object "${req.body.objectName}" not found`,
-						})
-					)
-				);
-			});
-	});
-}
+function getObjectByName(req) {
+	const collection = db.collection("units");
+	const findByName = collection
+		.where("created_by", "==", req.body.uid)
+		.where("name", "==", req.body.objectName)
+		.get();
 
-async function getCurrentObjectColor(req) {
-	//console.log("#5.1")
-	req.result.currentColor = (await db
-		.ref(req.result.objectPath + "/current/color")
-		.once("value")).val();
-	return req;
+	const findByTag = collection
+		.where("created_by", "==", req.body.uid)
+		.where("tags", "array-contains", req.body.objectName)
+		.get();
+
+	return Promise.all([findByName, findByTag]).then(
+		([unitDocByName, unitDocByTag]) => {
+			const unitDoc = unitDocByName.exists ? unitDocByName : unitDocByTag;
+			if (!unitDoc.exists) {
+				throw new Error(
+					JSON.stringify({
+						code: 404,
+						message: `object "${req.body.objectName}" not found`,
+					})
+				);
+			}
+			req.body.unit = doc.data();
+			return req;
+		}
+	);
 }
 
 function getNewColor(req) {
-	//console.log("#5.2");
 	return new Promise((resolve, reject) => {
+		const findSavedGradients = db
+			.collection("states")
+			.where("type", "==", "gradient")
+			.where("created_by", "==", req.body.uid)
+			.get();
+
 		// translate color (directly)
 		const newColor = namedColors.list.find((color) =>
 			req.body.textString.toUpperCase().includes(color.name.toUpperCase())
 		);
 		if (newColor) {
 			if (typeof newColor.value === "string") {
-				req.result.newHexColor = newColor.value;
+				req.result.newState = newColor.value;
 			}
 			if (typeof newColor.value === "function") {
-				req.result.newHexColor = newColor.value(
+				req.result.newState = newColor.value(
 					req.result.currentColor,
 					req.body.textString
 				);
@@ -155,21 +135,11 @@ function getNewColor(req) {
 }
 
 function applyNewColor(req) {
-	//console.log("#6");
-	// Apply new color to each lamp
-	return new Promise((resolve, reject) => {
-		// Apply new color to an lamp
-		db.ref(req.result.objectPath + "/current")
-			.set({
-				color: req.result.newHexColor,
-			})
-			.then(() => {
-				return resolve(req);
-			})
-			.catch((error) => {
-				return reject(error);
-			});
-	});
+	return db
+		.collection("units")
+		.doc(req.result.unit)
+		.update({ state: req.result.newState })
+		.then(() => req);
 }
 
 // set the color of an lamp
@@ -194,9 +164,8 @@ app.post("/set", (req, res) => {
 	req.result = {}; // storage for promise results
 	//console.log("#1");
 	return authenticateUser(req)
-		.then(extractObject)
-		.then(getObjectPathByName)
-		.then(getCurrentObjectColor)
+		.then(extractObjectName)
+		.then(getObjectByName)
 		.then(getNewColor)
 		.then(applyNewColor)
 		.then((req) => {
@@ -205,22 +174,21 @@ app.post("/set", (req, res) => {
 				lamp: req.result.objectName,
 				newColor: {
 					name: req.body.colorName,
-					hex: req.result.newHexColor,
+					hex: req.result.newState,
 				},
 			});
 			return true;
 		})
 		.catch((error) => {
-			//console.error(req.body, error);
 			try {
-				error = JSON.parse(error.toString().replace("Error: ", ""));
-				res.status(error.code);
-				res.send(`error: ${error.message}`);
+				const errorObject = JSON.parse(error.message);
+				res.status(errorObject.code);
+				res.send(`error: ${errorObject.message}`);
 			} catch (parseError) {
 				res.status(500);
-				res.send(`${JSON.stringify(error)}\n${error}`);
+				res.send(`ERROR: ${JSON.stringify(error.message)}`);
 			}
-			return false;
+			return res;
 		});
 });
 

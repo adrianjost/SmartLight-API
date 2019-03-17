@@ -9,7 +9,7 @@ try {
 	console.error(e);
 }
 
-const db = admin.database();
+const db = admin.firestore();
 
 module.exports = {
 	db,

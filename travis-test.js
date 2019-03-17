@@ -50,7 +50,7 @@ function test() {
 	//"Hey Google, mache das Licht ..."
 	const testStrings = [
 		"von Bett grün",
-		"vom Bett rot",
+		/*"vom Bett rot",
 		"im Bett orange",
 		"am Bett lila",
 		"an Bett lila",
@@ -65,7 +65,7 @@ function test() {
 		"vom Bett bitte 90% heller",
 		"vom Bett bitte viel heller",
 		"AN in unserem Bett",
-		"AUS im Bett",
+		"AUS im Bett",*/
 	];
 	let requests = testStrings.map(async (string) => {
 		return await testRequest(string);
