@@ -1,17 +1,18 @@
 {
 	"name": "functions",
 	"author": "Adrian Jost",
+	"license": "MIT",
 	"description": "Cloud Functions for SmartLight V3",
 	"engines": {
-		"node": "8.12.0"
+		"node": "<=10 >8"
 	},
 	"scripts": {
-		"deploy": "firebase deploy --only functions",
 		"lint": "run-s lint:*",
 		"lint:eslint": "eslint . --fix",
 		"lint:prettier": "prettier --write -c \"**/*.{js,json,md}\"",
 		"serve": "firebase serve --only functions",
-		"shell": "firebase experimental:functions:shell"
+		"shell": "firebase experimental:functions:shell",
+		"deploy": "firebase deploy --only functions:iftttApi"
 	},
 	"dependencies": {
 		"camelcase": "^5.0.0",
@@ -25,7 +26,7 @@
 		"eslint": "^4.12.0",
 		"eslint-plugin-promise": "^3.6.0",
 		"npm-run-all": "^4.1.5",
-		"yorkie": "^2.0.0",
-		"prettier": "^1.16.4"
+		"prettier": "^1.16.4",
+		"yorkie": "^2.0.0"
 	}
 }

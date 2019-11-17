@@ -6,6 +6,8 @@ const { db } = require("../initialize");
 // INIT
 const app = express();
 
+const log = true ? console.log : () => {};
+
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header(
@@ -27,24 +29,15 @@ function authenticateUser(req) {
 		.doc(req.body.uid)
 		.get()
 		.then((doc) => {
-			if (!doc.exists) {
-				throw new Error(
-					JSON.stringify({
-						code: 401,
-						message: `wrong uid or secret`,
-					})
-				);
+			if (doc.exists && doc.data().api_token === req.body.secret) {
+				return req;
 			}
-			const server_secret = doc.data().api_token;
-			if (server_secret !== req.body.secret) {
-				throw new Error(
-					JSON.stringify({
-						code: 401,
-						message: `wrong uid or secret`,
-					})
-				);
-			}
-			return req;
+			throw new Error(
+				JSON.stringify({
+					code: 401,
+					message: `wrong uid or secret`,
+				})
+			);
 		});
 }
 
@@ -71,18 +64,22 @@ function extractObjectName(req) {
 
 function getObjectByName(req) {
 	const collection = db.collection("units");
+
 	const findByName = collection
 		.where("created_by", "==", req.body.uid)
 		.where("name", "==", req.body.objectName)
 		.get();
 
+	log("objectName", req.body.objectName);
 	const findByTag = collection
 		.where("created_by", "==", req.body.uid)
-		.where("tags", "array-contains", req.body.objectName)
+		//.where("tags", "array-contains", "Bett") // TODO crash
 		.get();
+	log("wait findByTag", findByTag);
 
 	return Promise.all([findByName, findByTag]).then(
 		([unitDocByName, unitDocByTag]) => {
+			// TODO unitDocByName.map(a => a.data()) ...
 			const unitDoc = unitDocByName.exists ? unitDocByName : unitDocByTag;
 			if (!unitDoc.exists) {
 				throw new Error(
@@ -93,6 +90,7 @@ function getObjectByName(req) {
 				);
 			}
 			req.body.unit = doc.data();
+			console.log("unit", req.body.unit);
 			return req;
 		}
 	);
@@ -105,6 +103,8 @@ function getNewColor(req) {
 			.where("type", "==", "gradient")
 			.where("created_by", "==", req.body.uid)
 			.get();
+
+		console.log("findSavedGradients", findSavedGradients);
 
 		// translate color (directly)
 		const newColor = namedColors.list.find((color) =>
