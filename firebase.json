@@ -1,6 +1,14 @@
 {
 	"functions": {
 		"predeploy": ["npm run lint"],
-		"source": "functions"
+		"source": ".",
+		"ignore": [
+			"**/.git/**",
+			".github/**",
+			".vscode/**",
+			"test.html",
+			"travis-test.js",
+			"**/node_modules/**"
+		]
 	}
 }
