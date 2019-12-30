@@ -1,5 +1,7 @@
 # SmartLight Firebase Functions
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/adrianjost/SmartLight-IFTTT-Google-Home-Adapter.svg)](https://greenkeeper.io/)
+
 ## Setup
 
 1. install Yarn
