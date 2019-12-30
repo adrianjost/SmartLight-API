@@ -5,7 +5,7 @@ function handleUnitChange(change, context) {
 	const unitBefore = change.before.data();
 	if (unitBefore.type !== "GROUP") {
 		// only changes on groups are handled by this function
-		return;
+		return false;
 	}
 	const unitAfter = change.after.data();
 
@@ -14,14 +14,15 @@ function handleUnitChange(change, context) {
 
 	if (JSON.stringify(stateBefore) === JSON.stringify(stateAfter)) {
 		// only state changes get processed
-		return;
+		return false;
 	}
 
-	const lampUpdates = unitAfter.lamps.map((lampId) => {
-		db.collection("units")
+	const lampUpdates = unitAfter.lamps.map((lampId) =>
+		db
+			.collection("units")
 			.doc(lampId)
-			.update({ state: stateAfter });
-	});
+			.update({ state: stateAfter })
+	);
 	return Promise.all(lampUpdates);
 }
 

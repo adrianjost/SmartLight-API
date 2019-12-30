@@ -6,7 +6,8 @@ const { db } = require("../initialize");
 // INIT
 const app = express();
 
-const log = true ? console.log : () => {};
+// eslint-disable-next-line no-constant-condition
+const log = false ? console.log : () => {};
 
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -160,8 +161,7 @@ function applyNewColor(req) {
 		.then(() => req);
 }
 
-// set the color of a lamp
-app.post("/set", (req, res) => {
+function handleSpeachRequest(req, res) {
 	// error handling
 	if (!req.body.uid) {
 		res.status(400);
@@ -208,6 +208,10 @@ app.post("/set", (req, res) => {
 			}
 			return res;
 		});
-});
+}
+
+// set the color of a lamp
+app.post("/", handleSpeachRequest);
+app.post("/set", handleSpeachRequest);
 
 exports = module.exports = functions.https.onRequest(app);
