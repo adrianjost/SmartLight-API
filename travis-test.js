@@ -49,23 +49,23 @@ function test() {
 	//"Hey Google, Licht ... machen"
 	//"Hey Google, mache das Licht ..."
 	const testStrings = [
-		"von Bett grün",
-		/*"vom Bett rot",
-		"im Bett orange",
-		"am Bett lila",
-		"an Bett lila",
-		"vom Bett lila",
-		"von unserm Bett blau",
-		"vom unserem Bett türkis",
-		"vom unserem Bett lila bitte",
-		"vom unserem Bett pink bitte",
-		"vom Bett bitte gelb",
-		"vom Bett bitte 10% dunkler",
-		"vom Bett bitte 40 Prozent dunkler",
-		"vom Bett bitte 90% heller",
-		"vom Bett bitte viel heller",
-		"AN in unserem Bett",
-		"AUS im Bett",*/
+		"von Acht grün",
+		"vom Acht rot",
+		"im Acht orange",
+		"am Acht lila",
+		"an Acht lila",
+		"vom Acht lila",
+		"von unserm Acht blau",
+		"vom unserem Acht türkis",
+		"vom unserem Acht lila bitte",
+		"vom unserem Acht pink bitte",
+		"vom Acht bitte gelb",
+		"vom Acht bitte 10% dunkler",
+		"vom Acht bitte 40 Prozent dunkler",
+		"vom Acht bitte 90% heller",
+		"vom Acht bitte viel heller",
+		"AN in unserem Acht",
+		"AUS im Acht",
 	];
 	let requests = testStrings.map(async (string) => {
 		return await testRequest(string);
