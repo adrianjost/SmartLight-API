@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - 10
+
+branches:
+  only:
+    - master
+    - /^greenkeeper/.*$/
+
+install:
+  - yarn global add firebase-tools
+  - yarn install --frozen-lockfile
+
+script:
+  - npm run lint
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: npm run deploy
+  on:
+    branch: master
+
+cache: yarn
