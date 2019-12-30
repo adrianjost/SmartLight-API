@@ -1,5 +1,6 @@
 async function testRequest(string) {
-	const url = "http://localhost:5000/smartlight-4861d/us-central1/iftttApi/set";
+	const url =
+		"http://localhost:5000/smartlight-4861d/us-central1/iftttSpeach/set";
 	const data = {
 		uid: "IcAd2hRhBoRs5WTORWTTCSaRSvy2",
 		secret:

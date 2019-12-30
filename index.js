@@ -13,13 +13,13 @@ const files = glob.sync("./**/*.function.js", { cwd: __dirname });
 
 for (let f = 0, fl = files.length; f < fl; f++) {
 	const file = files[f];
+	const fileName = file.includes("index.function.js")
+		? file.replace("index.function.js", "")
+		: file.replace(/function\.js$/i, "");
 	const functionName = camelCase(
-		file
-			.slice(0, -12)
-			.split("/")
-			.filter((part) => {
-				return part !== "functions";
-			})
+		fileName.split("/").filter((part) => {
+			return part !== "functions";
+		})
 	); // Strip off '.function.js', than make the Path CamelCase
 	if (
 		!process.env.FUNCTION_NAME ||
