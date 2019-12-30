@@ -73,15 +73,13 @@ function getObjectByName(req) {
 	log("objectName", req.body.objectName);
 	const findByTag = collection
 		.where("created_by", "==", req.body.uid)
-		//.where("tags", "array-contains", "Bett") // TODO crash
+		.where("tags", "array-contains", req.body.objectName)
 		.get();
-	log("wait findByTag", findByTag);
-
 	return Promise.all([findByName, findByTag]).then(
 		([unitDocByName, unitDocByTag]) => {
-			// TODO unitDocByName.map(a => a.data()) ...
-			const unitDoc = unitDocByName.exists ? unitDocByName : unitDocByTag;
-			if (!unitDoc.exists) {
+			// Prefer name over tag
+			const unitDoc = unitDocByName.empty ? unitDocByTag : unitDocByName;
+			if (unitDoc.empty) {
 				throw new Error(
 					JSON.stringify({
 						code: 404,
@@ -89,8 +87,12 @@ function getObjectByName(req) {
 					})
 				);
 			}
-			req.body.unit = doc.data();
-			console.log("unit", req.body.unit);
+			let docs = [];
+			unitDoc.forEach((doc) => {
+				docs.push(doc.data());
+			});
+			req.result.unit = docs[0];
+			log("found", req.result.unit);
 			return req;
 		}
 	);
@@ -98,36 +100,52 @@ function getObjectByName(req) {
 
 function getNewColor(req) {
 	return new Promise((resolve, reject) => {
-		const findSavedGradients = db
-			.collection("states")
-			.where("type", "==", "gradient")
-			.where("created_by", "==", req.body.uid)
-			.get();
-
-		console.log("findSavedGradients", findSavedGradients);
-
 		// translate color (directly)
 		const newColor = namedColors.list.find((color) =>
 			req.body.textString.toUpperCase().includes(color.name.toUpperCase())
 		);
 		if (newColor) {
 			if (typeof newColor.value === "string") {
-				req.result.newState = newColor.value;
+				req.result.newState = { color: newColor.value };
 			}
 			if (typeof newColor.value === "function") {
-				req.result.newState = newColor.value(
-					req.result.currentColor,
-					req.body.textString
-				);
+				if (!req.result.unit.state.color) {
+					reject(
+						new Error(
+							JSON.stringify({
+								code: 500,
+								message: `${req.body.colorName} - I can only manipulate colors`,
+							})
+						)
+					);
+				}
+				req.result.newState = {
+					color: newColor.value(
+						req.result.unit.state.color,
+						req.body.textString
+					),
+				};
 			}
 			return resolve(req);
 		}
+
+		// no color found, check for saved gradients
+		// TODO: check for saved gradients and load them if found
+		/*
+		const findSavedGradients = db
+			.collection("states")
+			.where("type", "==", "gradient")
+			.where("created_by", "==", req.body.uid)
+			.get();
+
+		log("findSavedGradients", findSavedGradients);
+		*/
 
 		return reject(
 			new Error(
 				JSON.stringify({
 					code: 500,
-					message: `${req.body.colorName} - no hex value for color found`,
+					message: `${req.body.colorName} - no (hex) color or gradient found`,
 				})
 			)
 		);
@@ -137,12 +155,12 @@ function getNewColor(req) {
 function applyNewColor(req) {
 	return db
 		.collection("units")
-		.doc(req.result.unit)
+		.doc(req.result.unit.id)
 		.update({ state: req.result.newState })
 		.then(() => req);
 }
 
-// set the color of an lamp
+// set the color of a lamp
 app.post("/set", (req, res) => {
 	// error handling
 	if (!req.body.uid) {
@@ -162,7 +180,7 @@ app.post("/set", (req, res) => {
 	}
 
 	req.result = {}; // storage for promise results
-	//console.log("#1");
+	//log("#1");
 	return authenticateUser(req)
 		.then(extractObjectName)
 		.then(getObjectByName)
@@ -183,7 +201,7 @@ app.post("/set", (req, res) => {
 			try {
 				const errorObject = JSON.parse(error.message);
 				res.status(errorObject.code);
-				res.send(`error: ${errorObject.message}`);
+				res.send(`ERROR: ${errorObject.message}`);
 			} catch (parseError) {
 				res.status(500);
 				res.send(`ERROR: ${JSON.stringify(error.message)}`);
