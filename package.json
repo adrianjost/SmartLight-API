@@ -13,7 +13,9 @@
 		"lint:prettier": "prettier --write -c \"**/*.{js,json,md}\"",
 		"serve": "firebase serve --only functions",
 		"shell": "firebase experimental:functions:shell",
-		"deploy": "firebase deploy --only functions:iftttSpeach"
+		"deploy:iftttSpeach": "firebase deploy --only functions:iftttSpeach",
+		"deploy:populateGroupState": "firebase deploy --only functions:populateGroupState",
+		"deploy": "runs deploy:*"
 	},
 	"dependencies": {
 		"camelcase": "^5.3.1",
