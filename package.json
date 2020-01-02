@@ -1,9 +1,9 @@
 {
-	"name": "functions",
+	"name": "smartlight-api",
 	"author": "Adrian Jost",
 	"version": "3.0.0",
 	"license": "MIT",
-	"description": "SmartLight V3 Cloud Functions",
+	"description": "SmartLight V3 API Cloud Functions",
 	"engines": {
 		"node": "10"
 	},
@@ -14,9 +14,8 @@
 		"serve": "firebase serve --only functions",
 		"shell": "firebase experimental:functions:shell",
 		"deploy:iftttSpeach": "firebase deploy --only functions:iftttSpeach",
-		"deploy:populateGroupState": "firebase deploy --only functions:populateGroupState",
 		"deploy": "run-s deploy:*",
-		"setup": "yarn && cd functions && yarn"
+		"setup": "yarn"
 	},
 	"dependencies": {
 		"camelcase": "^5.3.1",
