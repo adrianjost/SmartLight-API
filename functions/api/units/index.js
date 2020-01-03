@@ -9,7 +9,7 @@ const GET = async (req, res) => {
 	docs.forEach((doc) => {
 		units.push(doc.data());
 	});
-	res.send(units);
+	res.send({ status: 200, data: units });
 };
 
 const SET = async (req, res) => {
@@ -17,7 +17,7 @@ const SET = async (req, res) => {
 		.collection("units")
 		.doc(req.params.id)
 		.set(req.body, { merge: true });
-	res.send({ status: "OK" });
+	res.send({ status: 200 });
 };
 
 const SET_NL = require("./SET_NL");
