@@ -4,7 +4,7 @@ const { db } = require("../../initialize");
 // eslint-disable-next-line no-constant-condition
 const log = false ? console.log : () => {};
 
-function extractObjectName(req) {
+function extractUnitName(req) {
 	return new Promise((resolve, reject) => {
 		let sanitisedString = req.body.payload
 			.replace(/bitte/g, "")
@@ -25,15 +25,13 @@ function extractObjectName(req) {
 	});
 }
 
-function getObjectByName(req) {
+function getUnitByName(req) {
 	const collection = db.collection("units");
-
+	log("objectName", req.body.objectName);
 	const findByName = collection
 		.where("created_by", "==", req.auth.userid)
 		.where("name", "==", req.body.objectName)
 		.get();
-
-	log("objectName", req.body.objectName);
 	const findByTag = collection
 		.where("created_by", "==", req.auth.userid)
 		.where("tags", "array-contains", req.body.objectName)
@@ -136,8 +134,8 @@ function handleSpeachRequest(req, res) {
 	}
 	req.result = {}; // storage for promise results
 	return Promise.resolve(req)
-		.then(extractObjectName)
-		.then(getObjectByName)
+		.then(extractUnitName)
+		.then(getUnitByName)
 		.then(getNewColor)
 		.then(applyNewColor)
 		.then((req) => {

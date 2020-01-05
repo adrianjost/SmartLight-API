@@ -10,8 +10,10 @@ app.get("/time", (req, res) => {
 
 app.get("/units", require("./units").GET);
 app.post("/units/setNL", require("./units").SET_NL);
-app.post("/units/:id", require("./units").CREATE);
-app.patch("/units/:id", require("./units").PATCH);
+app.get("/units/:id", require("./units").GET_ID);
+app.post("/units/:id", require("./units").SET_ID);
+app.patch("/units/:id", require("./units").SET_ID);
+app.delete("/units/:id", require("./units").DELETE);
 
 exports = module.exports = functions
 	.runWith({
