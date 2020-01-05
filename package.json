@@ -13,17 +13,17 @@
 		"lint:prettier": "prettier --write -c \"**/*.{js,json,md}\"",
 		"serve": "firebase serve --only functions",
 		"shell": "firebase experimental:functions:shell",
-		"deploy:iftttSpeach": "firebase deploy --only functions:iftttSpeach",
+		"deploy:api": "firebase deploy --only functions:api",
 		"deploy": "run-s deploy:*",
 		"setup": "yarn"
 	},
 	"dependencies": {
 		"camelcase": "^5.3.1",
 		"color-name-list": "^4.11.0",
-		"express": "^4.17.1",
 		"firebase-admin": "^8.9.0",
 		"firebase-functions": "^3.3.0",
-		"glob": "^7.1.6"
+		"glob": "^7.1.6",
+		"restana": "^4.0.3"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",
