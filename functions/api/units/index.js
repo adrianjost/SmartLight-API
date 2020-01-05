@@ -22,7 +22,7 @@ const SET_ID = async (req, res) => {
 		res.status(404);
 		return res.send("unit not found");
 	}
-	await unitRef.set(req.body, { merge: true });
+	await unitRef.set(req.body.payload, { merge: true });
 	res.send({ status: 200 });
 };
 
