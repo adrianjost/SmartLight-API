@@ -1,75 +1,103 @@
-function LightenDarkenColor(col, amt) {
-	// src: https://css-tricks.com/snippets/javascript/lighten-darken-color/
-	var usePound = false;
+const {
+	getLuminance,
+	setLuminance,
+	hex2rgb,
+	rgb2hex,
+} = require("../utils/color");
 
-	if (col[0] === "#") {
-		col = col.slice(1);
-		usePound = true;
-	}
-
-	var num = parseInt(col, 16);
-
-	var r = (num >> 16) + amt;
-
-	if (r > 255) r = 255;
-	else if (r < 0) r = 0;
-
-	var b = ((num >> 8) & 0x00ff) + amt;
-
-	if (b > 255) b = 255;
-	else if (b < 0) b = 0;
-
-	var g = (num & 0x0000ff) + amt;
-
-	if (g > 255) g = 255;
-	else if (g < 0) g = 0;
-
-	return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
-}
-
+/**
+ * @param  {string} user input in natural language
+ * @return {number} amount of change requested by the user in percentage (integer)
+ */
 function extractPercentage(string) {
+	// try to extract the exact percentage requested by the user first
 	const percentageExtractRegex = /([0-9]{1,3})(?:%| ?Prozent)/;
 	const matches = percentageExtractRegex.exec(string);
 	if (matches && matches.length >= 2) {
 		return parseInt(matches[1], 10);
 	}
-	if (string.includes("etwas")) {
-		return 30;
+	// if no percentage was found convert natural language hints into predefined values
+	if (string.includes("etwas") || string.includes("ein wenig")) {
+		return 10;
 	}
 	if (string.includes("viel")) {
-		return 100;
+		return 50;
 	}
-	if (string.includes("doppelt")) {
-		return 150;
-	}
-	if (string.includes("halb")) {
-		return -150;
-	}
-	return 75;
+	return 30;
+}
+
+/**
+ * @param  {string} color 7 digit color string (including `#`)
+ * @param  {number} percentage positive values will increase the brightness
+ * @return {string} new 7 digit color string (including `#`)
+ */
+function AdjustColorBrightness(color, percentage) {
+	const luminance = getLuminance(color);
+	const newLuminance = Math.min(Math.max(luminance + percentage, 0), 255);
+	const newColor = setLuminance(color, newLuminance);
+	return newColor;
+}
+
+/**
+ * will increase/decrease the red and blue value of the given color
+ * while trying to keep the brightness at an equal level.
+ * @param  {string} color 7 digit color string (including `#`)
+ * @param  {number} percentage positive values will increase the color temperature
+ * @return {string} new 7 digit color string (including `#`)
+ */
+function AdjustColorTemperature(color, percentage) {
+	// split percentage in half to split the manipulation between the red and blue color channel.
+	halfDiff = percentage * 1.275;
+	const rgbColor = hex2rgb(color);
+	rgbColor.r = Math.max(Math.min(rgbColor.r + halfDiff, 255), 0);
+	rgbColor.b = Math.max(Math.min(rgbColor.b - halfDiff, 255), 0);
+	return rgb2hex(rgbColor);
 }
 
 function lighten(currentColor, requestString) {
-	return LightenDarkenColor(currentColor, extractPercentage(requestString));
+	return AdjustColorBrightness(currentColor, extractPercentage(requestString));
 }
 
 function darken(currentColor, requestString) {
-	return LightenDarkenColor(currentColor, -extractPercentage(requestString));
+	return AdjustColorBrightness(currentColor, -extractPercentage(requestString));
 }
 
-exports.list = [
-	{ name: "rot", value: "#ff0000" },
-	{ name: "orange", value: "#ff9900" },
-	{ name: "grün", value: "#00ff00" },
-	{ name: "blau", value: "#0000ff" },
-	{ name: "schwarz", value: "#000000" },
-	{ name: "aus", value: "#000000" },
-	{ name: "weiß", value: "#ffffff" },
-	{ name: "an", value: "#ffffff" },
-	{ name: "türkis", value: "#00ffff" },
-	{ name: "lila", value: "#b90cff" },
-	{ name: "pink", value: "#ff00ff" },
-	{ name: "gelb", value: "#ffff00" },
-	{ name: "hell", value: lighten },
-	{ name: "dunkel", value: darken },
-	{ name: "dunkler", value: darken },
-];
+function heatUp(currentColor, requestString) {
+	return AdjustColorTemperature(currentColor, extractPercentage(requestString));
+}
+
+function coolDown(currentColor, requestString) {
+	return AdjustColorTemperature(
+		currentColor,
+		-extractPercentage(requestString)
+	);
+}
+
+module.exports = {
+	extractPercentage,
+	AdjustColorBrightness,
+	AdjustColorTemperature,
+	lighten,
+	darken,
+	heatUp,
+	coolDown,
+	list: [
+		{ name: "rot", value: "#ff0000" },
+		{ name: "orange", value: "#ff9900" },
+		{ name: "grün", value: "#00ff00" },
+		{ name: "blau", value: "#0000ff" },
+		{ name: "schwarz", value: "#000000" },
+		{ name: "aus", value: "#000000" },
+		{ name: "weiß", value: "#ffffff" },
+		{ name: "an", value: "#ffffff" },
+		{ name: "türkis", value: "#00ffff" },
+		{ name: "lila", value: "#b90cff" },
+		{ name: "pink", value: "#ff00ff" },
+		{ name: "gelb", value: "#ffff00" },
+		{ name: "hell", value: lighten },
+		{ name: "dunkel", value: darken },
+		{ name: "dunkler", value: darken },
+		{ name: "wärmer", value: heatUp },
+		{ name: "kälter", value: coolDown },
+	],
+};
