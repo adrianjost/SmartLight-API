@@ -117,5 +117,11 @@
 
 		// Warn against nested then() or catch() statements
 		"promise/no-nesting": 1
-	}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.unit.js"],
+			"extends": ["@schul-cloud/eslint-config/javascriptJest"]
+		}
+	]
 }

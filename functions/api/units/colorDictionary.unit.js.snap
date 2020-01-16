@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`api/units/colorDictionary AdjustColorBrightness check overflows - args: #000000, -20% 1`] = `"#000000"`;
+
+exports[`api/units/colorDictionary AdjustColorBrightness check overflows - args: #ffffff, 20% 1`] = `"#FFFFFF"`;
+
+exports[`api/units/colorDictionary AdjustColorBrightness darken single color - args: #ff0000, -20% 1`] = `"#CC0000"`;
+
+exports[`api/units/colorDictionary AdjustColorBrightness darken white - args: #ffffff, -20% 1`] = `"#CCCCCC"`;
+
+exports[`api/units/colorDictionary AdjustColorBrightness lighten black  - args: #000000, 20% 1`] = `"#333333"`;
+
+exports[`api/units/colorDictionary AdjustColorBrightness lighten single color - args: #ff0000, 20% 1`] = `"#FF0000"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature check overflows - args: #0000ff, -20% 1`] = `"#0000ff"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature check overflows - args: #ff0000, 20% 1`] = `"#ff0000"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature cool down warm white - args: #ff0000, -20% 1`] = `"#e6001a"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature cool down white - args: #ffffff, -20% 1`] = `"#e6ffff"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature heat up cold white - args: #000000ff, -20% 1`] = `"#00001a"`;
+
+exports[`api/units/colorDictionary AdjustColorTemperature heatup black  - args: #000000, 20% 1`] = `"#1a0000"`;
+
+exports[`api/units/colorDictionary extractPercentage can parse relative values 1`] = `10`;
+
+exports[`api/units/colorDictionary extractPercentage can parse relative values 2`] = `10`;
+
+exports[`api/units/colorDictionary extractPercentage can parse relative values 3`] = `50`;
+
+exports[`api/units/colorDictionary extractPercentage extract 0 1`] = `0`;
+
+exports[`api/units/colorDictionary extractPercentage extract a positive Number 1`] = `20`;
