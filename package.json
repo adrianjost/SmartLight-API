@@ -8,14 +8,17 @@
 		"node": "10"
 	},
 	"scripts": {
-		"lint": "run-s lint:*",
-		"lint:eslint": "eslint . --fix",
-		"lint:prettier": "prettier --write -c \"**/*.{js,json,md}\"",
-		"serve": "firebase serve --only functions",
-		"shell": "firebase experimental:functions:shell",
 		"deploy:api": "firebase deploy --only functions:api",
 		"deploy": "run-s deploy:*",
-		"setup": "yarn"
+		"lint:ci:eslint": "eslint .",
+		"lint:ci:prettier": "prettier -c \"**/*.{js,json,md}\"",
+		"lint:ci": "run-s lint:ci:*",
+		"lint:fix:eslint": "eslint . --fix",
+		"lint:fix:prettier": "prettier --write -c \"**/*.{js,json,md}\"",
+		"lint:fix": "run-s lint:fix:*",
+		"lint": "yarn lint:fix",
+		"serve": "firebase serve --only functions",
+		"shell": "firebase experimental:functions:shell"
 	},
 	"dependencies": {
 		"camelcase": "^5.3.1",
