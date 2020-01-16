@@ -1,4 +1,9 @@
-const { getLuminance, setLuminance, hex2rgb, rgb2hex } = require("../utils/color");
+const {
+	getLuminance,
+	setLuminance,
+	hex2rgb,
+	rgb2hex,
+} = require("../utils/color");
 
 /**
  * @param  {string} user input in natural language
@@ -40,7 +45,7 @@ function AdjustColorBrightness(color, percentage) {
  * @param  {number} percentage positive values will increase the color temperature
  * @return {string} new 7 digit color string (including `#`)
  */
-function AdjustColorTemperature(color, percentage){
+function AdjustColorTemperature(color, percentage) {
 	// split percentage in half to split the manipulation between the red and blue color channel.
 	halfDiff = percentage * 1.275;
 	const rgbColor = hex2rgb(color);
@@ -94,5 +99,5 @@ module.exports = {
 		{ name: "dunkler", value: darken },
 		{ name: "wärmer", value: heatUp },
 		{ name: "kälter", value: coolDown },
-	]
-}
+	],
+};

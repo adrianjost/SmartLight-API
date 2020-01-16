@@ -8,12 +8,12 @@ const Color = require("color");
  * @property {number} b - 0-255
  */
 
- /**
+/**
  * @param  {string} hexColor 7 digit color string (including `#`)
  * @return {RGBColor} rgbColor to convert into hex string
  */
 const hex2rgb = (hexColor) => {
-  return Color(hexColor).object();
+	return Color(hexColor).object();
 };
 
 /**
@@ -21,7 +21,9 @@ const hex2rgb = (hexColor) => {
  * @return {string} hexColor 7 digit color string (including `#`)
  */
 const rgb2hex = (rgbColor) => {
-  return Color(rgbColor).hex().toLowerCase();
+	return Color(rgbColor)
+		.hex()
+		.toLowerCase();
 };
 
 /**
@@ -42,8 +44,8 @@ const setLuminance = (hexColor, brightness) => {
 };
 
 module.exports = {
-  hex2rgb,
-  rgb2hex,
+	hex2rgb,
+	rgb2hex,
 	getLuminance,
 	setLuminance,
 };

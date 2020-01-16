@@ -14,7 +14,7 @@
 			"**/.prettierrc.js",
 			"**/.travis.yml",
 			"**/README.md",
-			"**/*.unit.js"
+			"**/*.unit.js",
 			"**/*.unit.js.snap"
 		]
 	}

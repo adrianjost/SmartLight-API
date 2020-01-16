@@ -22,5 +22,5 @@ module.exports = async (req, res, next) => {
 		userid,
 		token: apiToken,
 	};
-	next();
+	return next();
 };
