@@ -1,6 +1,6 @@
-# SmartLight Firebase Functions
+# SmartLight API
 
-[![Build Status](https://travis-ci.com/adrianjost/SmartLight-IFTTT-Google-Home-Adapter.svg?branch=master)](https://travis-ci.com/adrianjost/SmartLight-IFTTT-Google-Home-Adapter) [![Greenkeeper badge](https://badges.greenkeeper.io/adrianjost/SmartLight-IFTTT-Google-Home-Adapter.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.com/adrianjost/SmartLight-API.svg?branch=master)](https://travis-ci.com/adrianjost/SmartLight-API) [![Greenkeeper badge](https://badges.greenkeeper.io/adrianjost/SmartLight-API.svg)](https://greenkeeper.io/)
 
 ## Setup
 
