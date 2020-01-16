@@ -1,6 +1,6 @@
 {
 	"functions": {
-		"predeploy": ["npm run lint"],
+		"predeploy": [],
 		"source": ".",
 		"ignore": [
 			"**/.git/**",
