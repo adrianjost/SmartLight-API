@@ -20,7 +20,7 @@
 		"serve": "firebase serve --only functions",
 		"shell": "firebase experimental:functions:shell",
 		"test:watch": "yarn test --watchAll",
-		"test:ci": "jest && npx codecov",
+		"test:ci": "jest --collect-coverage && npx codecov",
 		"test": "jest"
 	},
 	"dependencies": {

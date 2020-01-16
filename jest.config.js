@@ -3,6 +3,5 @@ module.exports = {
 	moduleFileExtensions: ["js"],
 	coverageDirectory: "<rootDir>/coverage",
 	snapshotResolver: "<rootDir>/snapshotResolver.js",
-	collectCoverage: true,
 	collectCoverageFrom: ["<rootDir>/functions/**/*.js"],
 };
