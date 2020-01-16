@@ -13,7 +13,9 @@
 			"**/.prettierignore",
 			"**/.prettierrc.js",
 			"**/.travis.yml",
-			"**/README.md"
+			"**/README.md",
+			"**/*.unit.js"
+			"**/*.unit.js.snap"
 		]
 	}
 }
