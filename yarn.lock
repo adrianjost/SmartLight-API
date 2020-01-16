@@ -501,10 +501,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@schul-cloud/eslint-config@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@schul-cloud/eslint-config/-/eslint-config-0.2.1.tgz#0cb4123fa6cbb136957b229f26de68c6e166dd5e"
-  integrity sha512-RpdmrfT+m4aomngS6dd6uMAJwyhFF9GRGgTDITniPMZ1QuCHLaEaVISZuk/OkfjU72f5pJ/jo7fLfhq+nJxLWQ==
+"@schul-cloud/eslint-config@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@schul-cloud/eslint-config/-/eslint-config-0.3.0.tgz#9abf7ad4d32fa1724d47c294e77897d605c33c53"
+  integrity sha512-kBOLkyKrZldbXc7YtpejwMiFzKPKGxJkTqnMeumplxOhswd7cjT1N52LtoVIYtbZGmvrzO4R8/UcGAaj4HRnQg==
   dependencies:
     "@babel/core" "^7.7.7"
     "@vue/eslint-config-prettier" "^6.0.0"
