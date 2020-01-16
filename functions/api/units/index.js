@@ -23,7 +23,7 @@ const SET_ID = async (req, res) => {
 		return res.send("unit not found");
 	}
 	await unitRef.set(req.body.payload, { merge: true });
-	res.send({ status: 200 });
+	return res.send({ status: 200 });
 };
 
 const GET_ID = async (req, res) => {
@@ -34,7 +34,7 @@ const GET_ID = async (req, res) => {
 		res.status(404);
 		return res.send("unit not found");
 	}
-	res.send({ status: 200, data: unitData });
+	return res.send({ status: 200, data: unitData });
 };
 
 const DELETE_ID = async (req, res) => {
@@ -46,7 +46,7 @@ const DELETE_ID = async (req, res) => {
 		return res.send("unit not found");
 	}
 	await unitRef.delete();
-	res.send({ status: 200 });
+	return res.send({ status: 200 });
 };
 
 module.exports = {
