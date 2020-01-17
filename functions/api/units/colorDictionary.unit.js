@@ -10,7 +10,7 @@ const {
 } = require("./colorDictionary");
 
 describe("api/units/colorDictionary", () => {
-	it("exports a list of colors", () => {
+	test("exports a list of colors", () => {
 		expect(list.length > 0).toBe(true);
 		list.forEach((entry) => {
 			expect(entry.name).toStrictEqual(expect.any(String));
@@ -20,13 +20,13 @@ describe("api/units/colorDictionary", () => {
 
 	describe("extractPercentage", () => {
 		const prefix = "mache das Licht vom Bett";
-		it("extract 0", () => {
+		test("extract 0", () => {
 			expect(extractPercentage(prefix + "0 Prozent heller")).toMatchSnapshot();
 		});
-		it("extract a positive Number", () => {
+		test("extract a positive Number", () => {
 			expect(extractPercentage(prefix + "20 Prozent heller")).toMatchSnapshot();
 		});
-		it("can parse relative values", () => {
+		test("can parse relative values", () => {
 			expect(extractPercentage(prefix + "ein wenig heller")).toMatchSnapshot();
 			expect(extractPercentage(prefix + "etwas heller")).toMatchSnapshot();
 			expect(extractPercentage(prefix + "viel heller")).toMatchSnapshot();
@@ -34,7 +34,7 @@ describe("api/units/colorDictionary", () => {
 	});
 
 	describe("AdjustColorBrightness", () => {
-		it.each([
+		test.each([
 			["check overflows", "#000000", -20],
 			["check overflows", "#ffffff", +20],
 			["lighten black ", "#000000", +20],
@@ -47,7 +47,7 @@ describe("api/units/colorDictionary", () => {
 	});
 
 	describe("AdjustColorTemperature", () => {
-		it.each([
+		test.each([
 			["check overflows", "#0000ff", -20],
 			["check overflows", "#ff0000", +20],
 			["heatup black ", "#000000", +20],

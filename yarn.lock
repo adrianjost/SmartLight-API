@@ -515,10 +515,10 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@schul-cloud/eslint-config@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@schul-cloud/eslint-config/-/eslint-config-0.2.1.tgz#0cb4123fa6cbb136957b229f26de68c6e166dd5e"
-  integrity sha512-RpdmrfT+m4aomngS6dd6uMAJwyhFF9GRGgTDITniPMZ1QuCHLaEaVISZuk/OkfjU72f5pJ/jo7fLfhq+nJxLWQ==
+"@schul-cloud/eslint-config@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@schul-cloud/eslint-config/-/eslint-config-0.3.1.tgz#4c9012fa448c59bd89c38ccc500ea73281aaf142"
+  integrity sha512-inu7EHO9p7APyzp8OeQ8cSL0IVGOqwjdzUchzRUtElnTQPoXCJeKtNEB1LHW34M7bAkY6JUUt0rm8vxFkSeVaw==
   dependencies:
     "@babel/core" "^7.7.7"
     "@vue/eslint-config-prettier" "^6.0.0"
