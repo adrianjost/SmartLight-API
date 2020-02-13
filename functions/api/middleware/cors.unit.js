@@ -2,7 +2,7 @@ const cors = require("./cors");
 describe("api/middleware/cors", () => {
 	const getContext = () => [{}, { header: () => {} }, () => {}];
 
-	it("each request has cors headers set", () => {
+	test("each request has cors headers set", () => {
 		const context = getContext();
 		const spy = jest.spyOn(context[1], "header");
 		cors(...context);
@@ -13,7 +13,7 @@ describe("api/middleware/cors", () => {
 		);
 	});
 
-	it("next is called", () => {
+	test("next is called", () => {
 		const context = getContext();
 		const spy = jest.spyOn(context, 2);
 		cors(...context);
