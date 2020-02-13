@@ -1,21 +1,22 @@
 {
 	"functions": {
-		"predeploy": ["npm run lint"],
+		"predeploy": [],
 		"source": ".",
 		"ignore": [
+			"**/.eslintrc.json",
 			"**/.git/**",
 			"**/.github/**",
-			"**/test/**",
-			"**/node_modules/**",
-			"**/.eslintrc.json",
 			"**/.gitignore",
 			"**/.mergify.yml",
 			"**/.prettierignore",
 			"**/.prettierrc.js",
 			"**/.travis.yml",
-			"**/README.md",
+			"**/*.unit.js.snap",
 			"**/*.unit.js",
-			"**/*.unit.js.snap"
+			"**/coverage/**",
+			"**/node_modules/**",
+			"**/README.md",
+			"**/test/**"
 		]
 	}
 }

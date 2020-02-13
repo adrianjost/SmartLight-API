@@ -98,6 +98,7 @@ module.exports = {
 		{ name: "dunkel", value: darken },
 		{ name: "dunkler", value: darken },
 		{ name: "wärmer", value: heatUp },
+		{ name: "kühler", value: coolDown },
 		{ name: "kälter", value: coolDown },
 	],
 };

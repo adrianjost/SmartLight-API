@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
 	const userid = req.headers["authorization-userid"] || req.body.userid;
 	if (!userid) {
 		res.status(400);
-		return res.send(`no uid given`);
+		return res.send(`no userid given`);
 	}
 	const apiToken = req.headers["authorization-token"] || req.body.token;
 	if (!apiToken) {
