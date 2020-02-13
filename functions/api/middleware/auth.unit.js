@@ -12,7 +12,7 @@ describe("api/middleware/auth", () => {
 		() => {},
 	];
 
-	it("returns an error if authorization-userid header and body.userid is missing", () => {
+	test("returns an error if authorization-userid header and body.userid is missing", () => {
 		const context = getContext();
 		context[req].headers["authorization-token"] = "someAuthToken";
 		const statusSpy = jest.spyOn(context[res], "status");
@@ -22,7 +22,7 @@ describe("api/middleware/auth", () => {
 		expect(sendSpy).toHaveBeenCalledWith(`no userid given`);
 	});
 
-	it("returns an error if authorization-token header and body.token is missing", () => {
+	test("returns an error if authorization-token header and body.token is missing", () => {
 		const context = getContext();
 		context[req].headers["authorization-userid"] = "someUserId";
 		const statusSpy = jest.spyOn(context[res], "status");
@@ -46,7 +46,7 @@ describe("api/middleware/auth", () => {
 		return require("./auth");
 	};
 
-	it.skip("returns an error if given user does not exist", () => {
+	test.skip("returns an error if given user does not exist", () => {
 		const context = getContext();
 		context[req].headers["authorization-userid"] = "someUserId";
 		context[req].headers["authorization-token"] = "someAuthToken";
@@ -58,7 +58,7 @@ describe("api/middleware/auth", () => {
 		expect(sendSpy).toHaveBeenCalledWith(`Invalid Credentials`);
 	});
 
-	it.skip("req.auth gets set for valid credentials", () => {
+	test.skip("req.auth gets set for valid credentials", () => {
 		const spy = jest.spyOn(context, 2);
 		// TODO: mock valid context with userid and token
 		cors(...context);
@@ -66,7 +66,7 @@ describe("api/middleware/auth", () => {
 		expect(context[0].auth).toStrictEqual({ userid, token });
 	});
 
-	it.skip("next is called for valid users", () => {
+	test.skip("next is called for valid users", () => {
 		const spy = jest.spyOn(context, 2);
 		// TODO: mock valid context
 		cors(...context);
