@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"0http@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/0http/-/0http-2.2.1.tgz#1db5cb8c5bb34e572672a5b949d6c211d929197d"
-  integrity sha512-cbHwHUaXnGNLz5/+wo7ZWT8xdtqjke99L8I6A0laCh0qjUFx/9VkVD8yJm1q1A/lXCqXDSVFHOmEJ0FEfLZ54A==
+"0http@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/0http/-/0http-2.2.3.tgz#2fcab22da804ac420f3f22ca67c74c36151869b8"
+  integrity sha512-Mp6nB45p4Id0YiZ4Tw6X+3ATy4IDLT+WH/wAphYzVkdH0276bKQ/cSRYstT4lwqPOTyGaSx7Qnae40gGZJSoEA==
   dependencies:
     lru-cache "^5.1.1"
     trouter "^3.1.0"
@@ -1287,6 +1287,13 @@ collection-visit@^1.0.0:
   dependencies:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
+
+color-convert@^1.9.0, color-convert@^1.9.1:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
+  integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
+  dependencies:
+    color-name "1.1.3"
 
 color-convert@^2.0.1:
   version "2.0.1"
@@ -4993,12 +5000,12 @@ resolve@^1.12.0, resolve@^1.13.1, resolve@^1.3.2:
   dependencies:
     path-parse "^1.0.6"
 
-restana@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/restana/-/restana-4.0.3.tgz#98316355b68dde3976799e0f955b51ed406b05ef"
-  integrity sha512-xh398SjLov8ihHUhMwYOoXIjeYOyFuVevLVUnzs5WvkLqjPNpsudj3kHmhhj3LDxQVL5/OMtKRZLmkynYjKmog==
+restana@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/restana/-/restana-4.0.8.tgz#de605234ade4ceeca887abd3d2b5f09bc0671336"
+  integrity sha512-mHX5kXdvbTquthKwx2L7asd4DF9GUvaUeXsHBjsWiN7KR7cbT2yiL9r2m+P1WqsFIy+RQN9WTgFHxgP1yJp90g==
   dependencies:
-    "0http" "^2.2.1"
+    "0http" "^2.2.3"
 
 restore-cursor@^2.0.0:
   version "2.0.0"
