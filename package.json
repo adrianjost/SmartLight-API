@@ -33,7 +33,7 @@
 		"restana": "^4.0.3"
 	},
 	"devDependencies": {
-		"@schul-cloud/eslint-config": "^0.3.1",
+		"@schul-cloud/eslint-config": "^1.0.0",
 		"eslint": "^6.8.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"husky": "^4.0.10",
