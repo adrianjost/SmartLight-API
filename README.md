@@ -1,6 +1,6 @@
 # SmartLight API
 
-[![Build Status](https://travis-ci.com/adrianjost/SmartLight-API.svg?branch=master)](https://travis-ci.com/adrianjost/SmartLight-API) [![codecov](https://codecov.io/gh/adrianjost/SmartLight-API/branch/master/graph/badge.svg)](https://codecov.io/gh/adrianjost/SmartLight-API) [![Greenkeeper badge](https://badges.greenkeeper.io/adrianjost/SmartLight-API.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.com/adrianjost/SmartLight-API.svg?branch=master)](https://travis-ci.com/adrianjost/SmartLight-API) [![codecov](https://codecov.io/gh/adrianjost/SmartLight-API/branch/master/graph/badge.svg)](https://codecov.io/gh/adrianjost/SmartLight-API)
 
 ## Setup
 
