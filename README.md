@@ -1,6 +1,6 @@
 # SmartLight API
 
-[![Build Status](https://travis-ci.com/adrianjost/SmartLight-API.svg?branch=master)](https://travis-ci.com/adrianjost/SmartLight-API) [![codecov](https://codecov.io/gh/adrianjost/SmartLight-API/branch/master/graph/badge.svg)](https://codecov.io/gh/adrianjost/SmartLight-API)
+[![CI](https://github.com/adrianjost/SmartLight-API/workflows/CI/badge.svg)](https://github.com/adrianjost/SmartLight-API/actions?query=workflow%3ACI) [![codecov](https://codecov.io/gh/adrianjost/SmartLight-API/branch/master/graph/badge.svg)](https://codecov.io/gh/adrianjost/SmartLight-API)
 
 ## Setup
 
