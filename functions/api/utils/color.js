@@ -21,9 +21,7 @@ const hex2rgb = (hexColor) => {
  * @return {string} hexColor 7 digit color string (including `#`)
  */
 const rgb2hex = (rgbColor) => {
-	return Color(rgbColor)
-		.hex()
-		.toLowerCase();
+	return Color(rgbColor).hex().toLowerCase();
 };
 
 /**
