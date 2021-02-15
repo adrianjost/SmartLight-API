@@ -1,4 +1,5 @@
 const auth = require("./auth");
+
 describe("api/middleware/auth", () => {
 	const req = 0;
 	const res = 1;
@@ -31,20 +32,6 @@ describe("api/middleware/auth", () => {
 		expect(statusSpy).toHaveBeenCalledWith(400);
 		expect(sendSpy).toHaveBeenCalledWith(`no auth token given`);
 	});
-
-	const getMockedAuth = (response) => {
-		const mockQueryResponse = jest.fn().mockResolvedValue(response);
-		jest.mock("../../initialize", () => ({
-			db: () => ({
-				collection: jest.fn((path) => ({
-					doc: jest.fn((queryString) => ({
-						get: mockQueryResponse,
-					})),
-				})),
-			}),
-		}));
-		return require("./auth");
-	};
 
 	test.skip("returns an error if given user does not exist", () => {
 		const context = getContext();
