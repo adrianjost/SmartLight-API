@@ -11,7 +11,7 @@ function extractUnitName(req) {
 			.replace(/mache[n]?/g, "")
 			.trim();
 
-		const query = /(?:vor?[nm]|[ai][nm]|zum){1} (?:i[nm] )?(?:(?:unsere?|meine)[nm]? )?(\S*)/gi;
+		const query = /(?:vor?[nm]|[ai][nm]|zum|de[nm]){1} (?:i[nm] )?(?:(?:unsere?|meine)[nm]? )?(\S*)/gi;
 		const match = query.exec(sanitisedString);
 
 		if (!match) {
