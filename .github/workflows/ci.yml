@@ -30,7 +30,7 @@ jobs:
       - name: Test
         run: npm run test:ci
         env:
-          CODECOV_TOKEN: ${{ $CODECOV_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -43,4 +43,4 @@ jobs:
       - name: Build
         run: npm run deploy
         env:
-          FIREBASE_TOKEN: ${{ $FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
