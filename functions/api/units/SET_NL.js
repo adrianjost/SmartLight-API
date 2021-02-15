@@ -16,7 +16,9 @@ function extractUnitName(req) {
 
 		if (!match) {
 			return reject(
-				new Error(JSON.stringify({ code: 404, message: "can't decode object" }))
+				new Error(
+					JSON.stringify({ code: 404, message: "unknown message format" })
+				)
 			);
 		} else {
 			req.body.objectName = match[1];
@@ -44,7 +46,7 @@ function getUnitByName(req) {
 				throw new Error(
 					JSON.stringify({
 						code: 404,
-						message: `object "${req.body.objectName}" not found`,
+						message: `unit "${req.body.objectName}" not found`,
 					})
 				);
 			}
