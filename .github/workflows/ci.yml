@@ -6,29 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Cache node modules
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
           path: ~/.npm
           key: '${{ runner.os }}-node-${{ hashFiles(''**/package-lock.json'') }}'
-      - name: Install dependencies
-        run: npm ci
-      - name: Lint
-        run: npm run lint:ci
+      - run: npm ci
+      - run: npm run lint:ci
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Cache node modules
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
           path: ~/.npm
           key: '${{ runner.os }}-node-${{ hashFiles(''**/package-lock.json'') }}'
-      - name: Install dependencies
-        run: npm ci
-      - name: Test
-        run: npm run test:ci
+      - run: npm ci
+      - run: npm run test:ci
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   deploy:
@@ -40,7 +34,11 @@ jobs:
       - test
     steps:
       - uses: actions/checkout@v2
-      - name: Build
-        run: npm run deploy
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: '${{ runner.os }}-node-${{ hashFiles(''**/package-lock.json'') }}'
+      - run: npm ci
+      - run: npm run deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
