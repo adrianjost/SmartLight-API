@@ -128,7 +128,7 @@
 			},
 			"rules": {
 				// additional rules
-				"jest/consistent-test-it": "error",
+				"jest/consistent-test-it": ["error", { "fn": "test" }],
 				"jest/no-duplicate-hooks": "error",
 				"jest/no-expect-resolves": "error",
 				"jest/no-test-return-statement": "error",
