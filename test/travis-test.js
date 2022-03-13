@@ -1,6 +1,5 @@
 async function testRequest(string) {
-	const url =
-		"http://localhost:5000/aj-smartlight/us-central1/api/units/setNL";
+	const url = "http://localhost:5000/aj-smartlight/us-central1/api/units/setNL";
 	const data = {
 		uid: "IcAd2hRhBoRs5WTORWTTCSaRSvy2",
 		secret:
