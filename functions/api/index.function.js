@@ -16,6 +16,7 @@ app.patch("/units/:id", require("./units").SET_ID);
 app.delete("/units/:id", require("./units").DELETE_ID);
 
 exports = module.exports = functions
+	.region("europe-west1")
 	.runWith({
 		timeoutSeconds: 30,
 		memory: "512MB",

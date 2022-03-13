@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"description": "SmartLight V3 API Cloud Functions",
 	"engines": {
-		"node": "10"
+		"node": "16"
 	},
 	"scripts": {
 		"deploy:api": "firebase deploy --only functions:api",

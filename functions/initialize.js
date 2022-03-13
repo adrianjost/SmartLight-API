@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 try {
 	admin.initializeApp({
 		credential: admin.credential.applicationDefault(),
-		databaseURL: "https://smartlight-4861d.firebaseio.com",
+		databaseURL: "https://aj-smartlight.firebaseio.com",
 	});
 } catch (e) {
 	console.error(e);
